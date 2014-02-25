@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<project name="Lengyu" xmlns:jacoco="antlib:org.jacoco.ant" default="jacoco">
+	<property name="srcPath" value="E:/Src/ordercenter/ordercenter-web"/>
+	<property name="classPath" value="E:/Src/ordercenter/ordercenter-web/target/classes"/>
+	<property name="jacocoantPath" value="E:/Libs/jacoco_0.6.4/lib/jacocoant.jar"/>
+	
+	<property name="jacocoexecPath" value="E:/Libs/coverage_ant_task/jacoco.exec"/>
+	<property name="workspacePath" value="E:/Libs/coverage_ant_task"/>
+	<property name="reportfolderPath" value="E:/Libs/coverage_ant_task/report/"/>
+	
+	<property name="server_ip" value="10.52.143.56"/>
+	<property name="server_port" value="8893"/>
+	
+	<property name="mysrcpath" value="${srcPath}/src/main/java/" />
+	<property name="myclasspath" value="${classPath}/" />
+
+	<property name="checkOrderSrcpath" value="E:/Src/ordercenter/ordercenter-biz/src/main/java/" />
+	<property name="checkOrderClasspath" value="E:/Src/ordercenter/ordercenter-biz/target/classes/com/baidu/ordercenter/service/Impl" />
+	
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${jacocoantPath}" />
+	</taskdef>
+
+	<target name="merge">
+	    <jacoco:merge destfile="merged.exec">
+	        <fileset dir="${workspacePath}" includes="**/*.exec"/>
+	    </jacoco:merge>
+	</target>
+
+	<target name="dump">
+	    <jacoco:dump address="${server_ip}" reset="false" destfile="${jacocoexecPath}" port="${server_port}" append="true"/>
+	</target>
+	
+	<target name="jacoco">
+		<delete dir="${reportfolderPath}" />
+		<mkdir dir="${reportfolderPath}" />
+		
+		<jacoco:report>
+			<executiondata>
+				<file file="${jacocoexecPath}" />
+			</executiondata>
+				
+			<structure name="JaCoCo Report">
+				<group name="Check Order related">			
+					<classfiles>
+						<fileset dir="${checkOrderClasspath}" />
+					</classfiles>
+					<sourcefiles encoding="gbk">
+						<fileset dir="${checkOrderSrcpath}" />
+					</sourcefiles>
+				</group>
+
+				<group name="Others">			
+					<classfiles>
+						<fileset dir="${myclasspath}" />
+					</classfiles>
+					<sourcefiles encoding="gbk">
+						<fileset dir="${mysrcpath}" />
+					</sourcefiles>
+				</group>
+			</structure>
+			<html destdir="${reportfolderPath}" encoding="utf-8" />
+			
+		</jacoco:report>
+	</target>
+</project>
