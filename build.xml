@@ -8,7 +8,8 @@
 	<property name="workspacePath" value="E:/Libs/coverage_ant_task"/>
 	<property name="reportfolderPath" value="E:/Libs/coverage_ant_task/report/"/>
 	
-	<property name="server_ip" value="10.81.14.77"/>
+	<!--<property name="server_ip" value="10.81.14.77"/>-->
+	<property name="server_ip" value="db-rdqa-pool303.db01.baidu.com"/>
 	<property name="server_port" value="8893"/>
 	
 	<property name="mysrcpath" value="${srcPath}/src/main/java/" />
